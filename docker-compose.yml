@@ -4,7 +4,7 @@ services:
     image: postgres
     environment:
       - POSTGRES_DB=mydb-dev
-      - POSTGRES_USER=admin
+      - POSTGRES_USER=dev
       - POSTGRES_PASSWORD=password
     ports:
       - "5432:5432"
@@ -19,7 +19,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_NAME=mydb-dev
-      - DB_USER=admin
+      - DB_USER=dev
       - DB_PASS=password
     command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
