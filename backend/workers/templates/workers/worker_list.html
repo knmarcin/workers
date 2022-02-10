@@ -1,0 +1,79 @@
+{%  extends "workers/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="row">
+                <h3 class="col">Workers</h3>
+                <a class="col-4 btn btn-primary" href="{% url "worker_create" %}">+ Add worker</a>
+            </div>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Profession</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for worker in workers %}
+                        <tr id="worker-{{ worker.id }}" class="align-middle">
+                            {% if worker.picture %}
+                                <td>
+                                    <img class="img-fluid img-thumbnail" src="/images/{{ worker.picture }}" width="100" alt="{{ worker.name }}{{ worker.surname }}">
+                                </td>
+                            {% else %}
+                                <td>
+                                    <img class="img-fluid img-thumbnail" src="{% static 'images/default-avatar.jpeg' %}" width="100" alt="{{ worker.name }}{{ worker.surname }}">
+                                </td>
+                            {% endif %}
+
+                            <td>{{ worker.name }}</td>
+                            <td>{{ worker.surname }}</td>
+                            <td>{{ worker.profession }}</td>
+                            <td>{{ worker.age|timesince }}</td>
+
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a class="btn btn-primary" href="{% url "worker_detail"  worker.id  %}">details</a>
+                                    <a class="btn btn-warning" href="{% url "worker_update"  worker.id  %}">edit</a>
+                                    <a class="btn btn-danger" href="{% url "worker_delete"  worker.id  %}">delete</a>
+                                    <a class="btn btn-danger" onclick="deleteWorker({{ worker.id }})" id="workerIDelete" >ajax_delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="row">
+                <h3 class="col">Avg profession age</h3>
+                <a class="col-4 btn btn-secondary" href="{% url 'export-csv' %}">Export to CSV</a>
+            </div>
+
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Profession</th>
+                        <th scope="col">Average age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in avg_age_report %}
+                        <tr>
+                            {% for _, v in item.items %}
+                                <td>{{ v }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

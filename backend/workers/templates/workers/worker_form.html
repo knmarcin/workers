@@ -1,0 +1,14 @@
+{%  extends "workers/base.html" %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+        <div class="form-style col-sm-10 col-lg-6">
+            <form  method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <hr>
+                <input class="btn btn-primary" type="submit" value="Submit" />
+            </form>
+        </div>
+{% endblock %}

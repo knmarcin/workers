@@ -1,0 +1,26 @@
+{%  extends "workers/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="card" style="width: 18rem;">
+    {% if worker.picture %}
+        <img class="card-img-top" src="/images/{{ worker.picture }}" alt="Card image cap">
+    {% else %}
+        <img class="card-img-top" src="{% static 'images/default-avatar.jpeg' %}" alt="Card image cap">
+    {% endif %}
+    <div class="card-body">
+        <small>Imię, nazwisko</small>
+        <h5 class="card-title"> {{ object.name }} {{ object.surname }}</h5>
+
+    </div>
+    <ul class="list-group list-group-flush">
+
+        <li class="list-group-item"><small>Date of birth: </small>{{ object.age }}</li>
+        <li class="list-group-item"><small>Profession: </small>{{ object.profession }}</li>
+    </ul>
+    <div class="card-body">
+        <a class="btn btn-warning" href="{% url "worker_update"  object.id  %}">edit</a>
+        <a class="btn btn-danger" href="{% url "worker_delete"  object.id  %}">delete</a>
+  </div>
+</div>
+{% endblock %}
